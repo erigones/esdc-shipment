@@ -1,0 +1,36 @@
+{
+  "v": 2,
+  "uuid": "87c556ac-ab9d-11e2-914d-07682fcab47d",
+  "owner": "352971aa-31ba-496c-9ade-a379feaecd52",
+  "name": "centos-6",
+  "version": "2.4.1",
+  "state": "active",
+  "disabled": false,
+  "public": true,
+  "published_at": "2013-04-24T15:48:05.857Z",
+  "type": "zvol",
+  "os": "linux",
+  "files": [
+    {
+      "sha1": "7fb6d87df791bc514ece7f94c636fe83f767ade2",
+      "size": 1056,
+      "compression": "gzip"
+    }
+  ],
+  "description": "CentOS 6.4 64-bit image with just essential packages installed. Ideal for users who are comfortable with setting up their own environment and tools.",
+  "urn": "sdc:sdc:centos-6:2.4.1",
+  "requirements": {
+    "networks": [
+      {
+        "name": "net0",
+        "description": "public"
+      }
+    ],
+    "ssh_key": true
+  },
+  "acl": [],
+  "nic_driver": "virtio",
+  "disk_driver": "virtio",
+  "cpu_type": "qemu64",
+  "image_size": 16384
+}

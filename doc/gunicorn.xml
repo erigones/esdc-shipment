@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+
+<service_bundle type='manifest' name='gunicorn'>
+  <service name='application/gunicorn' type='service' version='0'>
+
+	<dependency name='network' grouping='require_all' restart_on='none' type='service'>
+		<service_fmri value='svc:/milestone/network:default'/>
+	</dependency>
+
+	<dependency name='filesystem-local' grouping='require_all' restart_on='none' type='service'>
+		<service_fmri value='svc:/system/filesystem/local:default'/>
+	</dependency>
+
+	<exec_method type='method' name='start' exec='%{daemon/bin} -D -c %{daemon/config} %{daemon/app}' timeout_seconds='60'>
+	</exec_method>
+
+	<exec_method type='method' name='stop' exec=':kill' timeout_seconds='60'>
+	</exec_method>
+
+	<exec_method type='method' name='refresh' exec=':kill -HUP' timeout_seconds='60'>
+	</exec_method>
+
+	<instance name='shipment' enabled='true'>
+		<method_context working_directory='/opt/shipment'>
+			<method_credential user='shipment' group='shipment' />
+			<method_environment>
+				<envvar name='PYTHONPATH' value='/opt/shipment' />
+				<envvar name='VIRTUAL_ENV' value='/opt/shipment/envs' />
+				<envvar name='PATH' value='/opt/shipment/envs/bin:/usr/local/bin:/opt/local/bin:/usr/bin:/bin' />
+				<envvar name='SHIPMENT_IMAGE_DIR' value='/datasets' />
+				<envvar name='SHIPMENT_NGINX_ENABLED' value='True' />
+			</method_environment>
+		</method_context>
+		<property_group name='daemon' type='application'>
+			<propval name='app' type='astring' value='shipment.app:app' />
+			<propval name='bin' type='astring' value='/opt/shipment/envs/bin/gunicorn' />
+			<propval name='config' type='astring' value='/opt/shipment/etc/gunicorn.py' />
+		</property_group>
+	</instance>
+
+	<stability value='Evolving' />
+
+  </service>
+</service_bundle>

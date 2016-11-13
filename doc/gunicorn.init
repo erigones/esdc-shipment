@@ -1,0 +1,89 @@
+#!/bin/sh
+# ===========================================================
+#  gunicorn - starts gunicorn_django daemon for shipment app.
+# ===========================================================
+#
+# chkconfig:   345 99 1
+
+### BEGIN INIT INFO
+# Provides:              gunicorn
+# Required-Start:        $all
+# Required-Stop:         $all
+# Default-Start:         2 3 4 5
+# Default-Stop:          0 1 6
+# Short-Description: starts the gunicorn server
+# Description:           starts gunicorn using start-stop-daemon
+### END INIT INFO
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+if [ -f /opt/rh/python27/enable ]; then
+	. /opt/rh/python27/enable
+fi
+
+NAME="gunicorn"
+DESC="Shipment gunicorn"
+SHIPMENT_HOME=${SHIPMENT_HOME:-"/opt/shipment"}
+ENVS="${SHIPMENT_HOME}/envs"
+PIDFILE="${SHIPMENT_HOME}/var/run/${NAME}.pid"
+DAEMON="${ENVS}/bin/gunicorn"
+SHIPMENT_USER="shipment"
+SHIPMENT_GROUP="shipment"
+SHIPMENT_APP="shipment.app:app"
+DAEMON_OPTS="-m 0022 -D -u ${SHIPMENT_USER} -g ${SHIPMENT_GROUP} -c ${SHIPMENT_HOME}/etc/gunicorn.py -p ${PIDFILE}"
+export PYTHONPATH="${SHIPMENT_HOME}:${PYTHONPATH}"
+
+test -x ${DAEMON} || exit 0
+. "${ENVS}/bin/activate"
+
+start () {
+    echo -n "Starting ${DESC}: "
+    daemon --pidfile ${PIDFILE} ${DAEMON} ${DAEMON_OPTS} ${SHIPMENT_APP}
+    echo
+}
+
+stop () {
+    echo -n "Stopping ${DESC}: "
+    killproc -p ${PIDFILE} ${DAEMON}
+    echo
+}
+
+reload () {
+    echo "ERROR: Reloading shipment gunicorn is not allowed!"
+    exit 4
+    echo -n "Reloading ${DESC}: "
+    killproc -p ${PIDFILE} ${DAEMON} -HUP
+    echo
+}
+
+rh_status () {
+    status -p ${PIDFILE} ${NAME}
+}
+
+case "$1" in
+    status)
+        rh_status
+        ;;
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    reload)
+        reload
+        ;;
+    restart)
+        stop
+        echo "Waiting for the dust to settle down..."
+        sleep 3
+        start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|reload|restart|status}" >&2
+        exit 64
+        ;;
+esac
+
+exit 0

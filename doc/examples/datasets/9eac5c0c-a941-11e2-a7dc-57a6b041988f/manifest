@@ -1,0 +1,31 @@
+{
+  "v": 2,
+  "uuid": "9eac5c0c-a941-11e2-a7dc-57a6b041988f",
+  "owner": "352971aa-31ba-496c-9ade-a379feaecd52",
+  "name": "base64",
+  "version": "13.1.0",
+  "state": "active",
+  "disabled": false,
+  "public": true,
+  "published_at": "2013-04-26T15:17:57.131Z",
+  "type": "zone-dataset",
+  "os": "smartos",
+  "files": [
+    {
+      "sha1": "e5f220ecf5b7a9e8956533a401a6dc884f9ca628",
+      "size": 45,
+      "compression": "bzip2"
+    }
+  ],
+  "description": "A 64-bit SmartOS image with just essential packages installed. Ideal for users who are comfortable with setting up their own environment and tools.",
+  "urn": "sdc:sdc:base64:13.1.0",
+  "requirements": {
+    "networks": [
+      {
+        "name": "net0",
+        "description": "public"
+      }
+    ]
+  },
+  "acl": []
+}

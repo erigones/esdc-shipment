@@ -1,0 +1,40 @@
+{
+  "v": 2,
+  "uuid": "e1896142-a382-11e2-bf8b-0719c824c61e",
+  "owner": "352971aa-31ba-496c-9ade-a379feaecd52",
+  "name": "riak",
+  "version": "1.8.0",
+  "state": "active",
+  "disabled": false,
+  "public": true,
+  "published_at": "2013-04-12T15:34:06.924Z",
+  "type": "zone-dataset",
+  "os": "smartos",
+  "files": [
+    {
+      "sha1": "e5f220ecf5b7a9e8956533a401a6dc884f9ca628",
+      "size": 45,
+      "compression": "bzip2"
+    }
+  ],
+  "description": "A 64-bit SmartOS image preconfigured to run Open Source Riak, a Dynamo-inspired key/value store from Basho.",
+  "urn": "sdc:sdc:riak:1.8.0",
+  "requirements": {
+    "networks": [
+      {
+        "name": "net0",
+        "description": "public"
+      }
+    ]
+  },
+  "users": [
+    {
+      "name": "root"
+    },
+    {
+      "name": "admin"
+    }
+  ],
+  "acl": [],
+  "generate_passwords": true
+}
