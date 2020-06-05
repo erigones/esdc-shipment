@@ -77,7 +77,7 @@ def get_image_file_md5(uuid, image_file_path):
         with open(image_file_path, 'rb') as img_fp:
             enc_md5 = _md5sum(img_fp)
         with open(md5_cache, 'w') as fp:
-            fp.write(enc_md5)
+            fp.write(enc_md5.decode('utf-8'))
 
     return enc_md5
 
